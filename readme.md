@@ -52,6 +52,11 @@ Restore Database
 ./pg_backup.sh restore "postgresql://postgres:secret@localhost:5432/mydb" backup_20250924_121530.sql
 ```
 
+## Cleanup Database (⚠️ destructive):
+```bash
+./pg_backup.sh cleanup "postgresql://user:password@host:6543/dbname"
+```
+
 
 ### 💡 Notes
 The DB user in the connection URL must have proper permissions.
