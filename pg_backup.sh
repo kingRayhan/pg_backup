@@ -36,6 +36,22 @@ restore_db() {
     fi
 }
 
+# Function: cleanup the DB (drop all objects)
+cleanup_db() {
+    if [ -z "$1" ]; then
+        echo "❌ Please provide a database URL"
+        exit 1
+    fi
+    DB_URL="$1"
+    echo "⚠️  Cleaning up database $DB_URL (dropping all objects)..."
+    psql "$DB_URL" -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+    if [ $? -eq 0 ]; then
+        echo "✅ Cleanup successful (database is empty)"
+    else
+        echo "❌ Cleanup failed"
+    fi
+}
+
 # Main
 case "$1" in
     dump)
@@ -44,10 +60,14 @@ case "$1" in
     restore)
         restore_db "$2" "$3"
         ;;
+    cleanup)
+        cleanup_db "$2"
+        ;;
     *)
         echo "Usage:"
         echo "  $0 dump <db_url>"
         echo "  $0 restore <db_url> <file.sql>"
+        echo "  $0 cleanup <db_url>"
         exit 1
         ;;
 esac
