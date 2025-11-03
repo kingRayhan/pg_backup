@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# ./pg_backup.sh dump <url>
+# ./pg_backup.sh restore <url> alma-stagging.sql
+# ./pg_backup.sh cleanup <url> backup_prod.sql
+
 # Backup file name with timestamp
 BACKUP_FILE="backup_$(date +%Y%m%d_%H%M%S).sql"
 
